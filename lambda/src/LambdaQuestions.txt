@@ -1,0 +1,38 @@
+Three Questions about Lambda Expressions
+
+1) In Java everything has a type, what is the type of Lambda expression ?
+
+Ans: Lambda is of a functional interface type. A functional interface is an interface with only
+one abstract method. Examples : Runnable interface, Comparator interface, FileFilter interface.
+(Since all classes extend from the Object class including the interfaces, the methods from the
+Object class doesn't count). You can use the annotation @FunctionalInterface to say that the interface
+is functional, the annotation is just there for convenience(It also helps compiler to identify and
+guide user to use that interface as a functional interface).
+
+2) Can a lambda be put in a variable ? If it can be, then it becomes a very powerful tool since
+lambdas can be passed as variables and returned from methods etc.
+
+Ans: Yes
+Example: Comparator<String> compVar = (s1, s2) -> Integer.compare(s1.length, s2.length);
+//compVar here can be passed to a method and also returned from a method.
+
+3)Is a lambda expression an object? Coz in Java everything is an object and every piece of code
+that we write has to be written inside a class.
+
+Example: Comparator<String> compVar = (s1, s2) -> Integer.compare(s1.length, s2.length);
+Example: Comparator<String> compVar = new Comparator<String>(String s1, String s2) {
+    public boolean compareTo(String s1, String s2) {
+        return Integer.compare(s1.length(), s2.length());
+    }
+};
+
+Ans: As you can notice from examples above, the lambda expression is created without using new
+keyword, whereas the anonymous implementation uses new keyword. The new key-word signals the
+compiler to allocate memory, to instantiate the static, non-static keywords as well as the methods
+from the Object class etc. All this memory allocation is avoided when using the lambda expression,
+hence it's much more efficient than using an anonymous class. But still compiler treats it as
+an object since it is passed and returned from methods. The answer is complex, but no it's not an
+object. (Exact answer is a lambda is an object without an identity (a new type of object introduced
+in Java 8)).
+Hence, it's a good practice to not call object methods or use synchronization functions on a lambda
+expression.
